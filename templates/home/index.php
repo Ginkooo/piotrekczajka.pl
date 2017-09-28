@@ -1,1 +1,3 @@
-dupeczka
+<?php
+echo $context['piesek'];
+?>

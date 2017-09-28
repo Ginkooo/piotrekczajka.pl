@@ -6,9 +6,9 @@ class Home
 {
     public function index($params)
     {
-        $data = [
+        $context = [
         'piesek' => 'kotek'
         ];
-        return new HttpResponse('home/index', $data);
+        return new HttpResponse('home/index', $context);
     }
 }

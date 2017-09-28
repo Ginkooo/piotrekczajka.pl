@@ -6,11 +6,13 @@ class HttpResponse
         $templatePath = $this->_normaliseFilePath($templatePath);
         $content = dirname(__DIR__) . '/../templates/' . $templatePath . '.php';
         $layout = dirname(__DIR__) . '/../templates/layouts/' . $layout . '.php';
-        echo $content;
         if (!file_exists($content)) {
             die('No such template file');
         }
-        require_once $content;
+        if (!file_exists($layout)) {
+            die('No such layout file');
+        }
+        require_once $layout;
     }
 
     private function _normaliseFilePath($filepath)
