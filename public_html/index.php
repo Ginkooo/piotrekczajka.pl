@@ -1,7 +1,4 @@
 <?php
-/**
- * Main file supposed to encapsulate request in a object and send it further
- */
 
 class Request {
     public function __construct($controller, $action, $params) {
@@ -11,38 +8,41 @@ class Request {
     }
 }
 
-function asureOnlyLetters($string)
+class RequestHandler
 {
-    $match = preg_match('/^[a-z]*[A-Z]*$/', $string);
-    if (!$match) {
-        http_response_code(404);
-        die('Bad url'); // TODO: Make this some kind of 404
+    private static function asureOnlyLetters($string)
+    {
+        $match = preg_match('/^[a-z]*[A-Z]*$/', $string);
+        if (!$match) {
+            throw new \InvalidArgumentException('Url contains illegal characters'); // TODO: Make this some kind of 404
+        }
+        return $string;
     }
-    return $string;
-}
 
-function getRequest()
-{
-    $controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
-    $action = isset($_GET['action']) ? $_GET['action'] : 'index';
-    $controller = asureOnlyLetters($controller);
-    $action = asureOnlyLetters($action);
-    $params = $_REQUEST;
+    public static function getRequest()
+    {
+        $controller = isset($_REQUEST['controller']) ? $_REQUEST['controller'] : 'home';
+        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'index';
+        $controller = self::asureOnlyLetters($controller);
+        $action = self::asureOnlyLetters($action);
+        $params = $_REQUEST;
 
-    $request = new Request($controller, $action, $params);
-    return $request;
-}
-
-function forwardRequest($request) {
-    $path = dirname(__DIR__) . '/controllers/' . $request->controller . '.php';
-    if (!file_exists($path)) {
-        die('Bad url');
+        $request = new Request($controller, $action, $params);
+        return $request;
     }
-    include_once $path;
-    $controller = new $request->controller;
-    call_user_func_array([$controller, $request->action], [$request->params]);
+
+    public static function forwardRequest($request)
+    {
+        $path = dirname(__DIR__) . '/controllers/' . $request->controller . '.php';
+        if (!file_exists($path)) {
+            throw new \RuntimeException("Controller file doesn't exist");
+        }
+        include_once $path;
+        $controller = new $request->controller;
+        call_user_func_array([$controller, $request->action], [$request->params]);
+    }
 }
 
 session_start();
-$request = getRequest();
-forwardRequest($request);
+$request = RequestHandler::getRequest();
+RequestHandler::forwardRequest($request);

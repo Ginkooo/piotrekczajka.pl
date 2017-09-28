@@ -1,8 +1,14 @@
 <?php
 
-class Home {
-    public function index()
+require_once dirname(__DIR__) . '/core/utils/HttpResponse.php';
+
+class Home
+{
+    public function index($params)
     {
-        echo 'siemaneczko';
+        $data = [
+        'piesek' => 'kotek'
+        ];
+        return new HttpResponse('home/index', $data);
     }
 }
