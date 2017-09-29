@@ -24,9 +24,15 @@ class Auth
             die('Bad sql');
         }
 
-        $query->execute([$username]);
+        $query->execute([mb_strtolower($username)]);
         $results = $query->fetchObject();
 
-        return password_verify($password, $results->pwhash);
+        $match = password_verify($password, $results->pwhash);
+
+        if ($match) {
+            $_SESSION['logged'] = mb_strtolower($username);
+        }
+
+        return $match;
     }
 }
