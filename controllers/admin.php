@@ -3,8 +3,17 @@
 require_once dirname(__DIR__) . '/core/utils/HttpResponse.php';
 require_once dirname(__DIR__) . '/core/auth.php';
 
+/**
+ * Class: Admin
+ * Controller, which should be accessible only by admin users.
+ * Contains all managment tools.
+ *
+ */
 class Admin
 {
+    /**
+     * Asures user accessing it is logged in
+     */
     public function __construct()
     {
         $username = $_REQUEST['username'];
@@ -17,6 +26,13 @@ class Admin
         }
     }
 
+    /**
+     * Shows admin home page
+     *
+     * @param array $params all passed parameters
+     *
+     * @return HttpResponse
+     */
     public function index($params)
     {
         echo 'Eligible to access admin controller';

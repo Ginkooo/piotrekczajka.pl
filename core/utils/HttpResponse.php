@@ -1,6 +1,20 @@
 <?php
+/**
+ * Class: HttpResponse
+ * handles echoind template php files, using correct layout and passes context data
+ *
+ */
 class HttpResponse
 {
+    /**
+     * Resolver php template files to output and outputs them
+     *
+     * @param string $templatePath relative path to the template file without extension
+     * @param string $context      hashmap containing context data which will be accessed in template
+     * @param string $layout       relative path to the layout file without extension
+     *
+     * @return void
+     */
     public function __construct($templatePath, $context, $layout='base')
     {
         $templatePath = $this->_normaliseFilePath($templatePath);
@@ -12,9 +26,16 @@ class HttpResponse
         if (!file_exists($layout)) {
             die('No such layout file');
         }
-        require_once $layout;
+        include_once $layout;
     }
 
+    /**
+     * Normalizes file path to match the pattern
+     *
+     * @param string $filepath path to normalize
+     *
+     * @return void
+     */
     private function _normaliseFilePath($filepath)
     {
         $startsWithSlash = mb_substr($filepath, 0, 1) == '/';

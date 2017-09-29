@@ -4,6 +4,14 @@ require_once __DIR__ . '/DatabaseHandler.php';
 
 class Auth
 {
+    /**
+     * Check if provided credencials are correct
+     *
+     * @param String $username username of the user
+     * @param String $password password of the user
+     *
+     * @return true if succeed, false otherwise
+     */
     public static function login($username, $password)
     {
         $pdo = DatabaseHandler::getPDO();
