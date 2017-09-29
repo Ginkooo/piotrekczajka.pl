@@ -7,7 +7,7 @@ class Home
     public function index($params)
     {
         $context = [
-        'piesek' => 'kotek'
+        'posts' => ['post 1', 'post 2', 'post 3', 'post 4', 'post5']
         ];
         return new HttpResponse('home/index', $context);
     }
