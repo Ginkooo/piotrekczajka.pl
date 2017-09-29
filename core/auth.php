@@ -14,6 +14,11 @@ class Auth
      */
     public static function login($username, $password)
     {
+
+        if (isset($_SESSION['logged'])) {
+            return true;
+        }
+
         $pdo = DatabaseHandler::getPDO();
 
         $sql = "SELECT * FROM users where username = ?";
