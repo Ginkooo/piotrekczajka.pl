@@ -40,4 +40,14 @@ class Auth
 
         return $match;
     }
+
+    /**
+     * Logs out user, by unsetting session key
+     *
+     * @return void
+     */
+    public static function logout()
+    {
+        unset($_SESSION['logged']);
+    }
 }
