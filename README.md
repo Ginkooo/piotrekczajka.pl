@@ -8,7 +8,7 @@ To be able to use database, you should create tables like:
 ```
 users {
 username: string,
-password: string (bcrypted password, 10 counr),
+password: string (bcrypted password, 10 count),
 real_name: string
 }
 ```
