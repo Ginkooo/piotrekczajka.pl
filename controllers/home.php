@@ -19,7 +19,7 @@ class Home
     public function index($params)
     {
         $context = [
-        'posts' => ['post 1', 'post 2', 'post 3', 'post 4', 'post5']
+        'categories' => ['category 1', 'category 2', 'category 3']
         ];
         return new HttpResponse('home/index', $context);
     }
